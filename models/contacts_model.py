@@ -16,7 +16,7 @@ class Contacts(Base):
     birth_day: Mapped[DateTime] = mapped_column(
         DateTime(timezone=True), nullable=False, server_default=func.now()
     )
-    meta: Mapped[dict] = mapped_column(JSONB),
+    data: Mapped[dict] = mapped_column(JSONB, nullable=True)
     created_at: Mapped[DateTime] = mapped_column(
         DateTime(timezone=True), nullable=False, server_default=func.now()
     )
