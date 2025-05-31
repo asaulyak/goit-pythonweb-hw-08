@@ -14,9 +14,10 @@ from src.config import config
 class Base(DeclarativeBase):
     pass
 
+
 class DatabaseSessionManager:
     def __init__(self, url: str):
-        self._engine: AsyncEngine | None = create_async_engine(url)
+        self._engine: AsyncEngine | None = create_async_engine(url, echo=True)
         self._session_maker: async_sessionmaker = async_sessionmaker(
             autoflush=False, autocommit=False, bind=self._engine
         )
@@ -34,7 +35,9 @@ class DatabaseSessionManager:
         finally:
             await session.close()
 
+
 sessionmanager = DatabaseSessionManager(config.DB_URL)
+
 
 async def get_db():
     async with sessionmanager.session() as session:
